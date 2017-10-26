@@ -6,7 +6,9 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="SuaveAzure.fs" />
+    <Compile Include="DAL.fs" />
+    <Compile Include="NewtonsoftJsonMapper.fs" />
+    <Compile Include="SuaveAzure.fs" />    
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

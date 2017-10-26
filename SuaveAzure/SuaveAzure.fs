@@ -4,10 +4,12 @@ open Suave
 open Suave.Filters
 open Suave.Operators
 open Suave.Successful
-open Suave.RequestErrors
+
 open Suave.Writers
 open Suave.Web
-open System
+open DAL.Db
+open JsonWrapper.NewtonsoftJsonMapper
+
 
 let setCORSHeaders =
     setHeader "Access-Control-Allow-Origin" "*"     
@@ -24,12 +26,21 @@ let allowCors : WebPart =
         //GET >=> setCORS            
     ]
 
+// let JSON v =
+//   let jsonSerializerSettings = new JsonSerializerSettings()
+//   jsonSerializerSettings.ContractResolver <- new CamelCasePropertyNamesContractResolver()
+
+//   JsonConvert.SerializeObject(v, jsonSerializerSettings)
+//   |> OK
+//   >=> setMimeType "application/json; charset=utf-8"
 
 [<EntryPoint>]
-let main argv = 
+let main argv =
     let webPart = 
         choose [            
-            GET >=> path "/" >=> OK "Votes"
+            GET >=> path "/" >=> (OK "Votes")
+            GET >=> path "/votes" >=>warbler (fun _ -> ToJson ok (getVotes()))
+            POST >=> path "/votes/add" >=> MapJson created addVote
         ]  
     
 //    let config =

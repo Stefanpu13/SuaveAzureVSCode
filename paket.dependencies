@@ -4,3 +4,4 @@ framework: >= net461
 nuget FAKE
 nuget FSharp.Core
 nuget Suave
+nuget Newtonsoft.Json
